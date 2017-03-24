@@ -7,7 +7,19 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="scala-sdk-2.12.1" level="application" />
-    <orderEntry type="library" name="spark相关jar" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../../../spark_jar_for_fix" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../../../spark_jar_for_fix" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/../../../spark_jar_for_fix" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../../../spark_jar_for_fix" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="scala-sdk-2.11.8" level="application" />
   </component>
 </module>
