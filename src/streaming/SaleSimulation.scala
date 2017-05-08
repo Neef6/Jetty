@@ -1,4 +1,4 @@
-//package cn.edu.nj.streaming
+//package streaming
 //import java.io.{PrintWriter}
 //import java.net.ServerSocket
 //import scala.io.Source
