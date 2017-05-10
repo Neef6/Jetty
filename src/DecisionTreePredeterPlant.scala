@@ -14,7 +14,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 object DecisionTreePredeterPlant {
 
 
-  ???
+
 
   def main(args: Array[String]): Unit = {
     val sc = new SparkContext("local", "RDF", new SparkConf())

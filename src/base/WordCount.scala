@@ -1,10 +1,9 @@
-package cn.edu.nj
+package base
 
 /**
   * Created by apple on 17/3/9.
   */
-import org.apache.spark.SparkConf
-import org.apache.spark.SparkContext
+import org.apache.spark.{SparkConf, SparkContext}
 
 object WordCount {
   def main(args: Array[String]) {
