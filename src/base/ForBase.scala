@@ -20,7 +20,7 @@ object ForBase {
   //read 本地，hdfs，压缩，当前目录，多个文件，可用通配符
   val distFile= sc.textFile("data.txt");
 
-  //处理
+  //转换操作
   //map filter
   // flatMap 1对多， 可以输入1个输出多个
   // mapPartitions  对分区进行操作，输入的是每个分区
@@ -41,10 +41,22 @@ object ForBase {
   z1.aggregateByKey(0)(math.max(_,_),_+_)
 
   //combineByKey(createCombiner,mergeValue.mergeCombiners)
-  val data1 = Array((1,1.0),(1,2.0),(1,3.0),(1,4.0),(1,5.0))
-  val rdd= sc.parallelize(data1,2)
-  val combine1=rdd.combineByKey(createCombiner = ())
+  val data = Array((1, 1.0), (1, 2.0), (1, 3.0), (2, 4.0), (2, 5.0), (2, 6.0))
+  val rdd = sc.parallelize(data, 2)
+  //先将一个1.0 => (1.0,1) 下面将同key的其他value加进来，频次加1,第三行，不同的分区进行合并
+  val combine1 = rdd.combineByKey(createCombiner = (v:Double) => (v:Double, 1),
+    mergeValue = (c:(Double, Int), v:Double) => (c._1 + v, c._2 + 1),
+    mergeCombiners = (c1:(Double, Int), c2:(Double, Int)) => (c1._1 + c2._1, c1._2 + c2._2),
+    numPartitions = 2 )
 
+  //sortByKey
+  //join
+  //cogroup
+  val rdd16 = rdd0.cogroup(rdd0)
+  //result： Array[(Int, (Iterable[Int], Iterable[Int]))] = Array((1,(ArrayBuffer(1, 2, 3),ArrayBuffer(1, 2, 3))), (2,(ArrayBuffer(1, 2,3),ArrayBuffer(1, 2, 3))))
+  
+  //cartesian 笛卡尔积
+  
 
 
 }
