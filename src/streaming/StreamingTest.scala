@@ -18,6 +18,7 @@ object StreamingTest {
     val wordCounts = words.map(x => (x, 1)).reduceByKey(_ + _)
     wordCounts.print()
     ssc.start()
+    //waiting for the terminal end to end
     ssc.awaitTermination()
   }
 

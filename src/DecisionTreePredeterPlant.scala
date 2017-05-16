@@ -1,7 +1,7 @@
 /**
   * Created by apple on 17/5/7.
   */
-package com.cloudera.datascience.rdf
+
 
 import org.apache.spark.mllib.evaluation.MulticlassMetrics
 import org.apache.spark.mllib.linalg.Vectors
@@ -12,8 +12,6 @@ import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 
 object DecisionTreePredeterPlant {
-
-
 
 
   def main(args: Array[String]): Unit = {
@@ -83,16 +81,79 @@ object DecisionTreePredeterPlant {
   def evaluate(trainData: RDD[LabeledPoint], cvData: RDD[LabeledPoint],
                testData: RDD[LabeledPoint]): Unit = {
     val evaluations = for (impurity <- Array("gini", "entropy");
-    depth <- Array(1, 20);
-    bins <- Array(10, 300)
+                           depth <- Array(1, 20);
+                           bins <- Array(10, 300)
     )
-    yield
-    {
-      val model = DecisionTree.trainClassifier(trainData, 7, Map[Int, Int](), impurity, depth, bins)
-      val accuracy = getMetrics(model, cvData).precision((imp))
+      yield {
+        val model = DecisionTree.trainClassifier(trainData, 7, Map[Int, Int](), impurity, depth, bins)
+        val accuracy = getMetrics(model,cvData).precision
+        ((impurity,depth,bins),accuracy)
+      }
+
+
+    evaluations.sortBy(_._2).reverse.foreach(println)
+    val model = DecisionTree.trainClassifier(
+      trainData.union(cvData),7,Map[Int,Int](),"entropy",20,300)
+      println(getMetrics(model,testData).precision)
+        println(getMetrics(model,trainData.union(cvData)).precision)
+  }
+
+  def unencodeOneHot(rawData: RDD[String]): RDD[LabeledPoint] = {
+    rawData.map { line =>
+      val values = line.split(',').map(_.toDouble)
+
+      val wilderness = values.slice(10, 14).indexOf(1.0)
+      val soil = values.slice(14, 54).indexOf(1.0).toDouble
+      val featureVector = Vectors.dense(values.slice(0, 10) :+ wilderness :+ soil)
+      val label = values.last - 1
+      LabeledPoint(label, featureVector)
     }
+  }
 
+  def evaluateCategorical(rawData: RDD[String]): Unit = {
+    val data = unencodeOneHot(rawData)
 
+    val Array(trainData, cvData, testData) = data.randomSplit(Array(0.8, 0.1, 0.1))
+    trainData.cache()
+    cvData.cache()
+    testData.cache()
+
+    val evaluations = for (impurity <- Array("gini", "entropy");
+                           depth <- Array(10,20,30);
+                           bins <- Array(40, 300)
+    )
+      //返回存储中变量的值
+      yield {
+        val model = DecisionTree.trainClassifier(trainData, 7, Map(10 -> 4,11 -> 40), impurity, depth, bins)
+        val trainsAccuracy=getMetrics(model,trainData).precision
+        val cvAccuracy=getMetrics(model,cvData).precision
+        ((impurity,depth,bins),(trainsAccuracy,cvAccuracy))
+      }
+    evaluations.sortBy(_._2._2).reverse.foreach(println)
+
+    val model= DecisionTree.trainClassifier(trainData.union(cvData),7,Map(10 -> 4,11 -> 40),"entropy",30,300)
+    println(getMetrics(model,testData).precision)
+    trainData.unpersist()
+    cvData.unpersist()
+    testData.unpersist()
+  }
+
+  def evaluateForest(rawData:RDD[String]):Unit={
+    val data=unencodeOneHot(rawData)
+    val Array(trainData,cvData)=data.randomSplit(Array(0.9,0.1))
+    trainData.cache()
+    cvData.cache()
+
+    val  forest=RandomForest.trainClassifier(trainData,7,Map(10->3,11->40),20,"auto","entropy",30,300)
+
+    val predicitionAndLabels=cvData.map(example=>
+      (forest.predict(example.features),example.label)
+    )
+
+    println(new MulticlassMetrics(predicitionAndLabels).precision)
+    val input="2709,125,28,67,23,3224,253,207,61,6094,0,29"
+    val vector = Vectors.dense(input.split(',').map(_.toDouble))
+    println(forest.predict(vector))
   }
 
 
