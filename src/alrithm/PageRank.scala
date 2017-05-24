@@ -1,4 +1,4 @@
-package alorithm
+package alrithm
 
 import org.apache.spark.{HashPartitioner, SparkConf, SparkContext}
 
