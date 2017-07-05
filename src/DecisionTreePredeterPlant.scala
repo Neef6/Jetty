@@ -50,6 +50,7 @@ object DecisionTreePredeterPlant {
     //build a simple tree，max deep ：4，max  barrel：100       Map vector index
     val model = DecisionTree.trainClassifier(trainData, 7, Map[Int, Int](), "gini", 4, 100)
     val metrics = getMetrics(model, cvData)
+    //cal each class precision and recall
     (0 until 7).map(
       category => (metrics.precision(category), metrics.recall(category))
     ).foreach(println)
@@ -82,6 +83,7 @@ object DecisionTreePredeterPlant {
     counts.map(_.toDouble / counts.sum)
   }
 
+ //cal optiml param
   def evaluate(trainData: RDD[LabeledPoint], cvData: RDD[LabeledPoint],
                testData: RDD[LabeledPoint]): Unit = {
     val evaluations = for (impurity <- Array("gini", "entropy");
