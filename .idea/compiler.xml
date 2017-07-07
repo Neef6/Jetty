@@ -4,5 +4,16 @@
     <excludeFromCompile>
       <file url="file://$PROJECT_DIR$/src/DecisionTreePredeterPlant.scala" />
     </excludeFromCompile>
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="lsa" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="lsa" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>
