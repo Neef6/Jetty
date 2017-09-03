@@ -1,8 +1,3 @@
-/**
-  * Created by apple on 17/5/7.
-  */
-
-
 import org.apache.spark.mllib.evaluation.MulticlassMetrics
 import org.apache.spark.mllib.linalg.Vectors
 import org.apache.spark.mllib.regression.LabeledPoint
@@ -10,7 +5,9 @@ import org.apache.spark.mllib.tree.{RandomForest, DecisionTree}
 import org.apache.spark.mllib.tree.model.DecisionTreeModel
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
-
+/**
+  * Created by apple on 17/9/3.
+  */
 object DecisionTreePredeterPlant {
 
 
@@ -18,7 +15,7 @@ object DecisionTreePredeterPlant {
     *
     *
     *
-   **/
+    **/
   def main(args: Array[String]): Unit = {
     val sc = new SparkContext("local", "RDF", new SparkConf())
     //1,274,15,30,2,1982,178,242,203,1360,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5
@@ -26,7 +23,7 @@ object DecisionTreePredeterPlant {
     val data = rawData.map { line =>
       val values = line.split(',').map(_.toDouble)
       val featureVector = Vectors.dense(values.init)//init 返回除最后一个值外的其他值
-      val label = values.last - 1 //decisionTree start from zero
+    val label = values.last - 1 //decisionTree start from zero
       LabeledPoint(label, featureVector)//特征向量
     }
 
@@ -41,8 +38,8 @@ object DecisionTreePredeterPlant {
 
     randomClassifier(trainData, cvData)
 
-   // evaluate(trainData, cvData, testData)
-   // evaluateCategorical(rawData)
+    // evaluate(trainData, cvData, testData)
+    // evaluateCategorical(rawData)
     //evaluateForest(rawData)
   }
 
@@ -83,7 +80,7 @@ object DecisionTreePredeterPlant {
     counts.map(_.toDouble / counts.sum)
   }
 
- //cal optiml param
+  //cal optiml param
   def evaluate(trainData: RDD[LabeledPoint], cvData: RDD[LabeledPoint],
                testData: RDD[LabeledPoint]): Unit = {
     val evaluations = for (impurity <- Array("gini", "entropy");
@@ -100,8 +97,8 @@ object DecisionTreePredeterPlant {
     evaluations.sortBy(_._2).reverse.foreach(println)
     val model = DecisionTree.trainClassifier(
       trainData.union(cvData),7,Map[Int,Int](),"entropy",20,300)
-      println(getMetrics(model,testData).precision)
-        println(getMetrics(model,trainData.union(cvData)).precision)
+    println(getMetrics(model,testData).precision)
+    println(getMetrics(model,trainData.union(cvData)).precision)
   }
 
   def unencodeOneHot(rawData: RDD[String]): RDD[LabeledPoint] = {
@@ -130,7 +127,7 @@ object DecisionTreePredeterPlant {
                            depth <- Array(10,20,30);
                            bins <- Array(40, 300)
     )
-      //返回存储中变量的值
+    //返回存储中变量的值
       yield {
         //指定类别特征10和11的取值个数
         val model = DecisionTree.trainClassifier(trainData, 7, Map(10 -> 4,11 -> 40), impurity, depth, bins)

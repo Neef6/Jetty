@@ -9,10 +9,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="decisiontree" />
         <module name="lsa" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="decisiontree" target="1.5" />
       <module name="lsa" target="1.5" />
     </bytecodeTargetLevel>
   </component>

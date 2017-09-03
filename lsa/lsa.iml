@@ -16,19 +16,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="file://$MODULE_DIR$/../../../../spark－jar－compil" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/../../../../spark－jar－compil" />
-        </SOURCES>
-        <jarDirectory url="file://$MODULE_DIR$/../../../../spark－jar－compil" recursive="false" />
-        <jarDirectory url="file://$MODULE_DIR$/../../../../spark－jar－compil" recursive="false" type="SOURCES" />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/../../../../environment/stanford-corenlp-3.7.0.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -42,6 +29,19 @@
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../../../../spark_jar_for_fix" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../../../../spark_jar_for_fix" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/../../../../spark_jar_for_fix" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../../../../spark_jar_for_fix" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>
