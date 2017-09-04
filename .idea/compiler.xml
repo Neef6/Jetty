@@ -11,11 +11,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="decisiontree" />
         <module name="lsa" />
+        <module name="nlp" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="decisiontree" target="1.5" />
       <module name="lsa" target="1.5" />
+      <module name="nlp" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
