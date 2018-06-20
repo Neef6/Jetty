@@ -40,7 +40,7 @@ object DecisionTreePredeterPlant {
 
     // evaluate(trainData, cvData, testData)
     // evaluateCategorical(rawData)
-    //evaluateForest(rawData)
+    evaluateForest(rawData)
   }
 
   def simpleDecisionTree(trainData: RDD[LabeledPoint], cvData: RDD[LabeledPoint]): Unit = {
@@ -151,6 +151,8 @@ object DecisionTreePredeterPlant {
     trainData.cache()
     cvData.cache()
 
+    //https://blog.csdn.net/webzjuyujun/article/details/49742985
+    //map -> 指明哪些特征是类别型的以及每个类别型特征对应值（类别）的数量
     val  forest=RandomForest.trainClassifier(trainData,7,Map(10->3,11->40),20,"auto","entropy",30,300)
 
     val predicitionAndLabels=cvData.map(example=>

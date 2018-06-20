@@ -13,5 +13,18 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="scala-sdk-2.11.8" level="application" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../../../../spark－jar－compil" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../../../../spark－jar－compil" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/../../../../spark－jar－compil" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../../../../spark－jar－compil" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
   </component>
 </module>

@@ -55,7 +55,7 @@ object Lsa {
     val svd = mat.computeSVD(k, computeU = true)
 
     println("Singular values:" + svd.s)
-    //奇异值分解，本model m是文档个数，n是词项个数
+    //奇异值分解，本model m是文档个数，n是词项个数，取top
     val topConceptTrems = topTermsInTopConcepts(svd, 10, 10, termIdss)
 
     val topConceptDocs = topDocsInTopConcepts(svd, 10, 10, docIdss)
